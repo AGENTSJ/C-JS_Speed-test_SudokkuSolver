@@ -1,14 +1,24 @@
 #include<stdio.h>
 #include<math.h>
+#include<time.h>
 
 int iteration = 0;
 
+int MAX_PREFERD_OUT = 100000;
 void Place(int board[9][9], int Position[2]);
 void dispBoard(int board[9][9]);
 int nextPosition(int board[9][9],int Position[2]);
 int Constraint(int board[9][9],int Position[2],int val);
+void writefile(int sudokuBoard[9][9]);
+
+time_t startTime, EndTime;
+FILE *fp;
 
 int main(){
+    
+    time(&startTime);
+    fp = fopen("C_solutions.txt","w");
+    fclose(fp);
     int sudokuBoard[9][9] = {
         {0, 0, 0, 2, 0, 8, 0, 0, 0},
         {0, 0, 0, 0, 0, 7, 0, 0, 0},
@@ -20,32 +30,49 @@ int main(){
         {0, 0, 0, 0, 0, 0, 6, 0, 0},
         {0, 4, 0, 0, 0, 0, 0, 3, 0}
     };
-
+    printf("running C code....wait few seconds..\n ");
+    // want to see sudoku solved solutions 
+    //note: speed can get affected 
+    // in a file uncomment line 20,49 and see C_solutions.txt
+    //or in console uncomment line 48 "
+    
     int Position[2] = {0, 0};
     Place(sudokuBoard, Position);
+    time(&EndTime);
+    printf("c_program created %d of outputs in %f seconds",iteration,difftime(EndTime,startTime));
 }
 
 void Place(int board[9][9], int Position[2]){
-    if(Position[0] == 9){
-        iteration++;
-        dispBoard(board);
-        return;
-    }
+    
 
-    if(board[Position[0]][Position[1]] != 0){
-        nextPosition(board, Position);
-        Place(board, Position);
-    }else{
-        for(int i=1; i<10; i++){
-            if(Constraint(board, Position, i)){
-                board[Position[0]][Position[1]] = i;
-                int nextPos[2] = {Position[0], Position[1]};
-                nextPosition(board, nextPos);
-                Place(board, nextPos);
-                board[Position[0]][Position[1]] = 0;
+    if(iteration<MAX_PREFERD_OUT){
+
+        if(Position[0] == 9){
+            //one sucessful output obtained 
+            iteration++;
+            // dispBoard(board);
+            // writefile(board);
+        return;
+   
+         }
+
+        if(board[Position[0]][Position[1]] != 0){
+            nextPosition(board, Position);
+            Place(board, Position);
+        }else{
+            for(int i=1; i<10; i++){
+                if(Constraint(board, Position, i)){
+                    board[Position[0]][Position[1]] = i;
+                    int nextPos[2] = {Position[0], Position[1]};
+                    nextPosition(board, nextPos);
+                    Place(board, nextPos);
+                    board[Position[0]][Position[1]] = 0;
+                }
             }
         }
+
     }
+    
 }
 
 int Constraint(int board[9][9],int Position[2],int val){
@@ -88,4 +115,25 @@ void dispBoard(int board[9][9]){
         printf("\n");
     }
     printf("/////////////////////////////////%d\n",iteration);
+}
+void writefile(int sudokuBoard[9][9]){
+
+    fp = fopen("C_solutions.txt","a");
+
+    fprintf(fp,"\n out no : %d\n",iteration);
+
+    for (int i = 0; i < 9; i++) {
+            // Iterate through the columns of the array
+            for (int j = 0; j < 9; j++) {
+            
+                fprintf(fp, "%d  ", sudokuBoard[i][j]);
+
+                
+            }
+
+            
+            fprintf(fp, "\n");
+        }
+        fclose(fp);
+
 }

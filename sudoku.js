@@ -1,5 +1,10 @@
 
 let iteration = 0;
+let numarr = [1,2,3,4,5,6,7,8,9]
+const MAX_PREFERD_OUT = 100000;
+ 
+const fs = require('fs');
+
 const sudokuBoard = [
     [0, 0, 0, 2, 0, 8, 0, 0, 0],
     [0, 0, 0, 0, 0, 7, 0, 0, 0],
@@ -10,45 +15,56 @@ const sudokuBoard = [
     [0, 0, 0, 0, 0, 9, 0, 0, 8],
     [0, 0, 0, 0, 0, 0, 6, 0, 0],
     [0, 4, 0, 0, 0, 0, 0, 3, 0]
-  ];
+];
+const startTime = new Date().getTime() / 1000;
+
+console.log("running js code..wait few seconds...\n");
+// want to see sudoku solved solutions note: speed can get affected
+//in a file uncomment line 6,56 and see js_solutions.txt
+// or in console uncomment line 57
+place(sudokuBoard)
+const endTime = new Date().getTime() / 1000;
+console.log(`js program created ${iteration} outputs in ${endTime-startTime} seconds`);
 
 
-let numarr = [1,2,3,4,5,6,7,8,9]
+
+
 
 function place(box){
     
-    let pos = voidPos(box)//returns x and y of 0 if any else false
-    let row = pos[0]
-    let col = pos[1]
-    
 
-    
-    if(pos[0]!==false){
+    if((iteration<MAX_PREFERD_OUT)){
+
+        let pos = nextPosition(box)//returns x and y of 0 if any else false
+        let row = pos[0]
+        let col = pos[1]
         
-     for(let i=1;i<=9;i++){
-      
+        if(pos[0]!==false){
+            
+        for(let i=1;i<=9;i++){
+        
             if(constraint(box ,i , row , col)){
-
-                
+ 
                 box[row][col]=i;
-                
-                place(box)
+                place(box);
 
             }
         }
-        box[row][col]=0;
-        
-        return
-    }else{
-        iteration = iteration+1;
-        console.log("the solution can be : \n");
-        dispBoard(box)//displays the sudoku board
+            box[row][col]=0;
+            return
+        }else{
+            //one sucess ful otput otained
+            iteration = iteration+1;
+            // console.log("the solution can be : \n");
+            // writeToFile();
+            // dispBoard(box)//displays the sudoku board
+        }
     }
     
     
+    
 }
-
-function voidPos(box){
+function nextPosition(box){
     
     for(let i=0;i<box[0].length;i++){
         for(let j=0;j<box[0].length;j++){
@@ -94,17 +110,7 @@ function constraint(box,num,row,col){
 
     return flag
 }
-function check(box){
-    let cflag = true
-    for(let i=0;i<9;i++){
-        for(let j = 0;j<9;j++){
-            if(box[i][j]==0){
-                return false
-            }
-        }
-    }
-    return cflag
-}
+
 function dispBoard(b) {
     for(let i=0;i<b.length;i++){
         let temp = b[i].join(',')
@@ -112,5 +118,24 @@ function dispBoard(b) {
     }
     console.log("\n.....................\n",iteration)
 }
- 
-place(sudokuBoard)
+
+
+function writeToFile() {
+    const filePath = 'js_solutions.txt';
+
+    // Use the 'a' flag to open the file in append mode
+    fs.appendFileSync(filePath, `\n out no : ${iteration}\n`);
+
+    for (let i = 0; i < 9; i++) {
+        // Iterate through the columns of the array
+        for (let j = 0; j < 9; j++) {
+            // Write each element of the row to the file
+            fs.appendFileSync(filePath, `${sudokuBoard[i][j]}  `);
+
+            // Add a space between elements
+        }
+
+        // Add a newline character at the end of each row
+        fs.appendFileSync(filePath, '\n');
+    }
+}

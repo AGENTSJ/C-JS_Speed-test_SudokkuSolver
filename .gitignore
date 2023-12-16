@@ -2,5 +2,6 @@ sud3.c
 a.exe
 report.txt
 rp.c
-
-
+test.c
+*.exe
+*.txt
