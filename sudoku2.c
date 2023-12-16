@@ -87,5 +87,5 @@ void dispBoard(int board[9][9]){
         }
         printf("\n");
     }
-    printf("/////////////////////////////////%d\n",iteration);
+    printf("/////////////////////////////////%d\n",iteration);// speed is based on this varibale it stores how many outputs or solutions that has been created
 }
