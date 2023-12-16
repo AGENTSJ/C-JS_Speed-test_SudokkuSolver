@@ -114,26 +114,5 @@ void dispBoard(int board[9][9]){
         }
         printf("\n");
     }
-    printf("/////////////////////////////////%d\n",iteration);
-}
-void writefile(int sudokuBoard[9][9]){
-
-    fp = fopen("C_solutions.txt","a");
-
-    fprintf(fp,"\n out no : %d\n",iteration);
-
-    for (int i = 0; i < 9; i++) {
-            // Iterate through the columns of the array
-            for (int j = 0; j < 9; j++) {
-            
-                fprintf(fp, "%d  ", sudokuBoard[i][j]);
-
-                
-            }
-
-            
-            fprintf(fp, "\n");
-        }
-        fclose(fp);
-
+    printf("/////////////////////////////////%d\n",iteration);// speed is based on this varibale it stores how many outputs or solutions that has been created
 }
