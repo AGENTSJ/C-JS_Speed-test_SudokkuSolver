@@ -1,12 +1,12 @@
 # speed analysis with sudokku solver:
 
-## Speed test was done based on number of output created in 1 min (printed in console)
+## Speed test was done based on which program provides 100000 outputs first
 
             
-c code       : number(solution): 10726 in 1 min<br>
-js code      : number(solution): 33218 in 1 min<br>
+c code       : 100000 solutions in 6.0000 seconds<br>
+js code      : 100000 solutions in 10.540999 seconds min<br>
   
-   js is faster than c : x 3.3217<br>
+   C >> Js - 1.8 x
 
-yeah dont kill me maybe my c code was not good or something!!
+earlier i got js as fast but after changing loging of output to terminal c was faster!!.
 
