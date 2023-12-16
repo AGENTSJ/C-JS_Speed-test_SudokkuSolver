@@ -1,6 +1,6 @@
-## speed analysis with sudokku solver:
+# speed analysis with sudokku solver:
 
-# Speed test was done based on number of output created in 1 min (printed in console)
+## Speed test was done based on number of output created in 1 min (printed in console)
 
             
 c code       : number(solution): 10726 in 1 min
