@@ -8,5 +8,4 @@ js code      : 100000 solutions in 10.540999 seconds min<br>
   
    C >> Js - 1.8 x
 
-earlier i got js as fast but after changing loging of output to terminal c was faster!!.
 
